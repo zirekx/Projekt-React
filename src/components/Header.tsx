@@ -1,6 +1,6 @@
-// Header.tsx
+
 import React from 'react';
-import './styles/Header.css'; // Importuj plik CSS
+import './styles/Header.css'; 
 import { useNavigate } from 'react-router-dom';
 
 
@@ -12,8 +12,8 @@ const Header: React.FC<HeaderProps> = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    sessionStorage.removeItem('user'); // Usuwanie użytkownika z sesji
-    navigate('/login'); // Przekierowanie na stronę logowania
+    sessionStorage.removeItem('user'); 
+    navigate('/login'); 
   };
   return (
     <div className="header">

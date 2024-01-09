@@ -6,14 +6,12 @@ interface RouteGuardProps {
 }
 
 const RouteGuard: React.FC<RouteGuardProps> = ({ children }) => {
-  const user = sessionStorage.getItem('user'); // Pobranie danych użytkownika z sesji
+  const user = sessionStorage.getItem('user'); 
 
   if (!user) {
-    // Jeśli użytkownik nie jest zalogowany, przekieruj na stronę logowania
     return <Navigate to="/login" />;
   }
 
-  // Jeśli użytkownik jest zalogowany, wyrenderuj komponent dziecka (np. Profile)
   return <>{children}</>;
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import RequireAuth from './RequireAuth'; // Upewnij się, że ścieżka do RequireAuth jest poprawna
+import RequireAuth from './RequireAuth'; 
 
-// Importuj swoje komponenty
+
 import Homepage from './Homepage';
 import Login from './Login';
 import Profile from './Profile';
@@ -22,7 +22,7 @@ function App() {
             <Profile />
           </RequireAuth>
         } />
-        {/* Dodaj tu inne ścieżki w podobny sposób, jeśli są inne strony, które wymagają autoryzacji */}
+        {}
       </Routes>
     </Router>
   );

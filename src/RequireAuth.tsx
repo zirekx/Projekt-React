@@ -9,7 +9,6 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
   const user = sessionStorage.getItem('user');
 
   if (!user) {
-    // Jeśli użytkownik nie jest zalogowany, przekieruj na stronę logowania
     return <Navigate to="/login" />;
   }
 

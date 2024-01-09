@@ -3,7 +3,6 @@ import Header from './components/Header';
 import './Profile.css';
 import { Tabs } from 'antd';
 
-// Definicja interfejsu dla danych użytkownika
 interface User {
   id: number;
   name: string;

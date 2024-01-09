@@ -6,19 +6,16 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// Definicja typu dla użytkownika
 interface User {
   id: number;
   name: string;
   username: string;
-  // ... inne pola użytkownika
 }
 
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const navigate = useNavigate();
 
-  // Funkcja do pobierania użytkowników z API
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -32,16 +29,13 @@ const App: React.FC = () => {
   }, []);
 
   const onFinish = (values: any) => {
-    // Znajdź użytkownika po nazwie użytkownika
     const user = users.find(user => user.username === values.username);
 
     if (user) {
-      // Zapisz użytkownika w sesji i przekieruj na stronę główną
       sessionStorage.setItem('user', JSON.stringify(user));
       navigate('/');
     } else {
       console.error('User not found');
-      // Tutaj możesz dodać obsługę błędów, np. wyświetlenie komunikatu
     }
   };
 
