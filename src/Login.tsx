@@ -1,19 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
-import Header from './components/Header'; 
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import Header from './components/Header';
+import { UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-
+// Definicja typu dla użytkownika
+interface User {
+  id: number;
+  name: string;
+  username: string;
+  // ... inne pola użytkownika
+}
 
 const App: React.FC = () => {
-    const onFinish = (values: any) => {
-      console.log('Received values of form: ', values);
+  const [users, setUsers] = useState<User[]>([]);
+  const navigate = useNavigate();
+
+  // Funkcja do pobierania użytkowników z API
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
     };
-  
-    return (
-        <div>
-            <Header />
+    fetchUsers();
+  }, []);
+
+  const onFinish = (values: any) => {
+    // Znajdź użytkownika po nazwie użytkownika
+    const user = users.find(user => user.username === values.username);
+
+    if (user) {
+      // Zapisz użytkownika w sesji i przekieruj na stronę główną
+      sessionStorage.setItem('user', JSON.stringify(user));
+      navigate('/');
+    } else {
+      console.error('User not found');
+      // Tutaj możesz dodać obsługę błędów, np. wyświetlenie komunikatu
+    }
+  };
+
+  return (
+    <div>
+      <Header />
       <Form
         name="normal_login"
         className="login-form"
@@ -26,26 +60,16 @@ const App: React.FC = () => {
         >
           <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
         </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[{ required: true, message: 'Please input your Password!' }]}
-        >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Password"
-          />
-        </Form.Item>
         <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
-  
+
           <a className="login-form-forgot" href="">
             Forgot password
           </a>
         </Form.Item>
-  
+
         <Form.Item>
           <Button type="primary" htmlType="submit" className="login-form-button">
             Log in
@@ -53,9 +77,8 @@ const App: React.FC = () => {
           Or <a href="">register now!</a>
         </Form.Item>
       </Form>
-      </div>
-    );
-  };
-  
-  export default App;
-  
+    </div>
+  );
+};
+
+export default App;
